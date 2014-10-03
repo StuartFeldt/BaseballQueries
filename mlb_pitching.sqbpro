@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?><sqlb_project><db path="C:/Users/e036737/Desktop/wzc3e7/mlb.db"/><window><current_tab id="3"/></window><tab_structure><column_width id="0" width="300"/><column_width id="1" width="0"/><column_width id="2" width="100"/><column_width id="3" width="854"/><expanded_item id="0" parent="-1"/><expanded_item id="1" parent="-1"/><expanded_item id="2" parent="-1"/><expanded_item id="3" parent="-1"/></tab_structure><tab_browse><current_table name="pitchers"/><column_widths data="AAAAAQAAABAAcABpAHQAYwBoAGUAcgBzAAAAAQAAAAAAAAAA"/><sort column="0" order="0"/></tab_browse><tab_sql><sql name="top_pitcher_per_team2.sql">select min(era), team, name, home_runs, games_started, k from pitchers 
+where games_started &gt; 10
+group by team;</sql><sql name="top_pitcher_per_team.sql">select p.era, p.team, p.name from (
+	select min(era) as min_era, team
+	from pitchers
+	where games_started &gt; 15 
+	group by team
+) as x 
+inner join 
+pitchers as p 
+on p.team = x.team 
+and p.era = x.min_era;</sql><sql name="relievers.sql">select avg(era), avg(saves), avg(whip), avg(k), min(era), name, team, games_started, wins, losses, whip, k, innings_pitched
+from pitchers as p1
+where (
+	select count(*) from pitchers as p2
+	where p2.team = p1.team
+	and p2.era &lt;= p1.era
+	and p2.games_started = 0
+	and p2.innings_pitched &gt; 15
+) &lt;= 1
+and (
+	select count(*) from pitchers as p2
+	where p2.team = p1.team
+	and p2.era &lt;= p1.era
+	and p2.games_started = 0
+and p2.innings_pitched &gt; 15
+) &gt; 0
+and p1.games_started = 0
+and p1.innings_pitched &gt; 15
+order by era;</sql><sql name="aggregate.sql">select avg(era), avg(wins), avg(losses), avg(whip), avg(k), min(era), max(era)
+from pitchers as p1
+where (
+	select count(*) from pitchers as p2
+	where p2.team = p1.team
+	and p2.era &lt;= p1.era
+	and p2.games_started &gt; 10
+) &lt;= 1
+and (
+	select count(*) from pitchers as p2
+	where p2.team = p1.team
+	and p2.era &lt;= p1.era
+	and p2.games_started &gt; 10
+) &gt; 0
+and p1.games_started &gt; 10
+
+union
+
+select avg(era), avg(wins), avg(losses), avg(whip), avg(k), min(era), max(era)
+from pitchers as p1
+where (
+	select count(*) from pitchers as p2
+	where p2.team = p1.team
+	and p2.era &lt;= p1.era
+	and p2.games_started &gt; 10
+) &lt;= 2
+and (
+	select count(*) from pitchers as p2
+	where p2.team = p1.team
+	and p2.era &lt;= p1.era
+	and p2.games_started &gt; 10
+) &gt; 1
+and p1.games_started &gt; 10
+
+union
+
+select avg(era), avg(wins), avg(losses), avg(whip), avg(k), min(era), max(era)
+from pitchers as p1
+where (
+	select count(*) from pitchers as p2
+	where p2.team = p1.team
+	and p2.era &lt;= p1.era
+	and p2.games_started &gt; 10
+) &lt;= 3
+and (
+	select count(*) from pitchers as p2
+	where p2.team = p1.team
+	and p2.era &lt;= p1.era
+	and p2.games_started &gt; 10
+) &gt; 2
+and p1.games_started &gt; 10
+
+
+union
+
+select avg(era), avg(wins), avg(losses), avg(whip), avg(k), min(era), max(era)
+from pitchers as p1
+where (
+	select count(*) from pitchers as p2
+	where p2.team = p1.team
+	and p2.era &lt;= p1.era
+	and p2.games_started &gt; 10
+) &lt;= 4
+and (
+	select count(*) from pitchers as p2
+	where p2.team = p1.team
+	and p2.era &lt;= p1.era
+	and p2.games_started &gt; 10
+) &gt; 3
+and p1.games_started &gt; 10
+
+
+union
+
+select avg(era), avg(wins), avg(losses), avg(whip), avg(k), min(era), max(era)
+from pitchers as p1
+where (
+	select count(*) from pitchers as p2
+	where p2.team = p1.team
+	and p2.era &lt;= p1.era
+	and p2.games_started &gt; 10
+) &lt;= 5
+and (
+	select count(*) from pitchers as p2
+	where p2.team = p1.team
+	and p2.era &lt;= p1.era
+	and p2.games_started &gt; 10
+) &gt; 4
+and p1.games_started &gt; 10;</sql><sql name="starters.sql">select avg(era), avg(wins), avg(losses), avg(whip), avg(k), min(era), era, name, team, games_started, wins, losses, whip, k
+from pitchers as p1
+where (
+	select count(*) from pitchers as p2
+	where p2.team = p1.team
+	and p2.era &lt;= p1.era
+	and p2.games_started &gt; 10
+) &lt;= 1
+and (
+	select count(*) from pitchers as p2
+	where p2.team = p1.team
+	and p2.era &lt;= p1.era
+	and p2.games_started &gt; 10
+) &gt; 0
+and p1.games_started &gt; 10
+order by era;</sql><current_tab id="4"/></tab_sql></sqlb_project>
